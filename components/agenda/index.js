@@ -1,11 +1,28 @@
-import React from 'react'
-import { Image, View } from 'react-native'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Agenda } from 'react-native-calendars'
+import React, { useEffect, useState } from 'react';
+import { Image, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Agenda } from 'react-native-calendars';
+import { getMeetsByStudents } from '../../services/meetings.service';
 
 function AgendaComponent() {
+    const [meets, setMeets] = useState({});
+    async function loadData() {
+        try {
+            // TODO: Get the logged user id
+            const data = await getMeetsByStudents("65c631fb63500cdc729300e0");
+            setMeets(data);
+        } catch (error) {
+            console.error("Error fetching meets:", error);
+        }
+    }
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return (
         <Agenda
+            futureScrollRange={50}
             selected="2024-03-01"
             theme={{
                 // agendaDayTextColor: 'yellow',
@@ -14,36 +31,33 @@ function AgendaComponent() {
                 // agendaKnobColor: 'blue'
             }}
             hideKnob={false}
-            showClosingKnob={true} // hedhy temchy bch tkhalik tchouf el button eli ynjm ysaker bih el calender yelz eli fou9ha false
-
+            showClosingKnob={true}
             onCalendarToggled={calendarOpened => {
                 console.log("calendarOpened");
             }}
-
-            items={{
-                '2024-03-01': [{ name: 'Cycling' }, { name: 'Walking' }, { name: 'Running' }],
-                '2024-03-02': [{ name: 'Writing' }],
-                '2024-03-04': [{ name: 'Writing' }],
-                '2024-03-06': [{ name: 'Writing' }],
-                '2024-03-12': [{ name: 'reading' }],
-                '2024-03-11': [{ name: 'reading' }],
-                '2024-03-10': [{ name: 'reading' }],
-                '2024-03-06': [{ name: "jawha behy oun", color: 'blue', proffesor: "../../assets/images/image.jpg" }] //
-            }}
+            items={meets}
             renderItem={(item, isFirst) => (
                 <TouchableOpacity onPress={(e) => { console.log(item) }}>
                     <View style={styles.item}>
-                        <Text style={styles.itemText}>{item.name}</Text>
+                        <View>
+                            <Text >{item["title"] || "No Title"}</Text>
+                            <Text style={styles.itemText}>{item.professorId.fullName}</Text>
+                        </View>
                         <Image style={{ width: 50, height: 50 }} source={require('../../assets/images/image.jpg')} />
-
                     </View>
                 </TouchableOpacity>
             )}
-        />)
+            renderEmptyData={() => {
+                return <View style={styles.item}>
+                    <Text style={styles.itemText}>{"there is nothing to render here"}</Text>
+                    <Image style={{ width: 50, height: 50 }} source={require('../../assets/images/image.jpg')} />
+                </View>;
+            }}
+        />
+    );
 }
 
-export default AgendaComponent
-
+export default AgendaComponent;
 
 const styles = StyleSheet.create({
     item: {
@@ -61,4 +75,4 @@ const styles = StyleSheet.create({
         color: '#888',
         fontSize: 16,
     }
-})
+});
