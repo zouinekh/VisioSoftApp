@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     SafeAreaView,
     ScrollView,
@@ -8,8 +8,10 @@ import {
 } from 'react-native';
 import { LocaleConfig } from 'react-native-calendars';
 import AgendaComponent from '../../components/agenda';
+import { useSelector } from 'react-redux';
 function Home() {
     const [selected, setSelected] = useState('');
+   
     LocaleConfig.locales['fr'] = {
         monthNames: [
             'Janvier',
@@ -60,6 +62,7 @@ export default Home
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
         justifyContent: 'center'
     },
 

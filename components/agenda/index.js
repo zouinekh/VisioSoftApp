@@ -3,13 +3,18 @@ import { Image, View } from 'react-native';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 import { getMeetsByStudents } from '../../services/meetings.service';
+import { useSelector } from 'react-redux';
 
 function AgendaComponent() {
-    const [meets, setMeets] = useState({});
+    const [meets, setMeets] = useState([]);
+    const userInformmation = useSelector((state) => state.user)
+
     async function loadData() {
         try {
             // TODO: Get the logged user id
-            const data = await getMeetsByStudents("65c631fb63500cdc729300e0");
+            console.log(userInformmation.informations)
+            const data = await getMeetsByStudents(userInformmation.informations.userId);
+            console.log(data)
             setMeets(data);
         } catch (error) {
             console.error("Error fetching meets:", error);
@@ -17,13 +22,14 @@ function AgendaComponent() {
     }
 
     useEffect(() => {
+        console.log(userInformmation.informations)
         loadData();
-    }, []);
+    }, [userInformmation]);
 
     return (
         <Agenda
             futureScrollRange={50}
-            selected="2024-03-01"
+            selected="2024-06-01"
             theme={{
                 // agendaDayTextColor: 'yellow',
                 // agendaDayNumColor: 'green',

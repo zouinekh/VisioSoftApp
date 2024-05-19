@@ -1,20 +1,21 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react'
-import Home from '../../screens/home';
+import Login from '../../screens/login';
 
-function HomeStack() {
+function LoginStack() {
     const Stack = createStackNavigator();
 
     return (
         <Stack.Navigator >
             <Stack.Screen
-                name="Calendar"
-                component={Home}
-                options={{ headerShown: true }}
+                name="login"
+                component={Login}
+                options={{ headerShown: false }}
+
             />
 
         </Stack.Navigator>
     )
 }
 
-export default HomeStack
+export default LoginStack

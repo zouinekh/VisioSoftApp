@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1036486245280",
+    "project_id": "visiosoft-3cc60",
+    "storage_bucket": "visiosoft-3cc60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036486245280:android:ab3153bf08c9d7d8ef42c5",
+        "android_client_info": {
+          "package_name": "com.anonymous.visioSoftApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDV20__vrL7bBvcmocjPYPU4cyNZRIEiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
